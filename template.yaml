@@ -1,0 +1,206 @@
+theme: default # default || classic || dark
+organization: Urban Robotics Lab
+title: "OpenHEART: Opening Heterogeneous Articulated Objects with a Legged Manipulator"
+journal: "ICRA'26"
+resources:
+  paper (coming soon): COMING SOON
+  # arxiv: COMING SOON
+  # code: https://github.com/denkiwakame/academic-project-template
+  # video: https://www.youtube.com/embed/onbnb_D1wC8?si=xJczUv716Lt5aO4l&amp;start=1150
+  # demo: https://colab.research.google.com/
+  # huggingface: https://huggingface.co/
+description: a framework for opening heterogeneous articulated objects with a legged manipulator.
+
+image: https://achrxme-1838.github.io/OpenHeartProject/teaser.jpg
+url: https://achrxme-1838.github.io/OpenHeartProject/
+speakerdeck: # speakerdeck slide ID
+authors:
+  - name: Seonghyeon Lim
+    affiliation: [1]
+    position: Researcher
+  - name: Hyeonwoo Lee
+    affiliation: [1]
+    position: Researcher
+  - name: Seunghyun Lee
+    affiliation: [1]
+    position: Researcher
+  - name: I Made Aswin Nahrendra
+    affiliation: [1]
+    position: Researcher
+  - name: Hyun Myung*
+    affiliation: [1]
+    position: Principal investigator
+  # - name: John Smith
+  #   affiliation: [1]
+  #   position: Researcher
+  #   url: https://thispersondoesnotexist.com/
+affiliations:
+  - KAIST, Electrical Engineering
+meta:
+  - '*Corresponding author.'
+bibtex: >
+  TBU
+
+teaser: media/ICRA2026_0911v2_framework-1.png
+abstract: |
+  **Legged manipulators** offer high mobility and versatile manipulation. However, robust interaction with **heterogeneous articulated objects**, such as doors, drawers, and cabinets, remains challenging because of the diverse articulation types of the objects and the complex dynamics of the legged robot.
+  Existing reinforcement learning-based approaches often rely on high-dimensional sensory inputs, leading to sample inefficiency. 
+  In this paper, we propose a robust and sample-efficient framework for opening heterogeneous articulated objects with a legged manipulator. 
+  In particular, we propose **Sampling-based Abstracted Feature Extraction (SAFE)**, which encodes handle and panel geometry into a compact low-dimensional representation, improving cross-domain generalization. 
+  Additionally, **Articulation Information Estimator (ArtIEst)** is introduced to adaptively mix proprioception with exteroception to estimate opening direction and range of motion for each object. The proposed framework was deployed to manipulate various heterogeneous articulated objects in simulation and real-world robot systems.
+body:
+  - title: Heterogeneous Articulate Object Opening
+    text: |
+      ### **Real-world Demonstration**
+      <div uk>
+        <div class="uk-slider-items uk-grid-small uk-child-width-1-1 uk-child-width-1-1@m uk-grid">
+          <div>
+            <video
+              src="media/icra2026_vid_real.mp4"
+              loop
+              muted
+              uk-video="autoplay:inview"
+              />
+          </div>
+        </div>
+      </div>
+
+      ### **Diverse Object Opening**
+      <div uk-slider>
+        <div class="uk-slider-items uk-grid-small uk-child-width-1-1 uk-child-width-1-2@m uk-grid">
+          <div>
+            <video
+              src="media/diverse_opening_sim_1.mp4"
+              loop
+              muted
+              uk-video="autoplay:inview"
+              />
+          </div>
+          <div>
+            <video
+              src="media/diverse_opening_sim_2.mp4"
+              loop
+              muted
+              uk-video="autoplay:inview"
+              />
+          </div>
+          <div>
+            <video
+              src="media/diverse_opening_sim_3.mp4"
+              loop
+              muted
+              uk-video="autoplay:inview"
+              />
+          </div>
+          <div>
+            <video
+              src="media/diverse_opening_sim_4.mp4"
+              loop
+              muted
+              uk-video="autoplay:inview"
+              />
+          </div>
+        </div>
+        <div class="uk-flex uk-flex-center uk-margin-small">
+          <a class="uk-icon-button" href uk-slidenav-previous uk-slider-item="previous"></a>
+          <a class="uk-icon-button uk-margin-small-left" href uk-slidenav-next uk-slider-item="next"></a>
+        </div>
+      </div>
+
+  - title: Articulation Information Estimator (ArtIEst)
+    text: |
+
+      ### **Articulation Information**
+      The *articulation information* is defined as the joint direction of the object and the distance between the handle and the joint axis.
+      It is required to estimate the grasping pose as well as the direction and range of opening motion.
+
+      ### **Visual Ambiguity in Articulation Information**
+      Although the exteroception-based estimator can infer articulation information before manipulation, estimation can be ambiguous when visual features suggest multiple candidates.
+
+      E.g. a cabinet with a horizontally elongated handle at the upper center may appear to open left, right, or downward.
+      
+      <div uk>
+        <div class="uk-slider-items uk-grid-small uk-child-width-1-1 uk-child-width-1-1@m uk-grid">
+          <div>
+            <img src="media/visual_ambiguity.png">
+          </div>
+        </div>
+      </div>
+      
+      To resolve such visual ambiguities, the proprioception-augmented estimator incorporates proprioceptive information with exteroceptive information during manipulation. 
+    
+      ### **ArtIEst Framework**
+      ArtIEst, predicts articulation information by adaptively combining *exteroception* and *proprioception*. We separate the estimator based on whether proprioception is included as an input. It's because when the robot is still approaching the object, proprioception alone cannot provide meaningful cues for estimating the opening direction. The exteroception-based estimator relies on the object's appearance. Once contact is made, the proprioception-augmented estimator incorporates proprioception
+
+      <div uk>
+        <div class="uk-slider-items uk-grid-small uk-child-width-1-1 uk-child-width-1-1@m uk-grid">
+          <div>
+            <img src="media/artiest_framework.jpg">
+          </div>
+        </div>
+      </div>
+
+      ### **Estimation Demonstration**
+      <div uk>
+        <div class="uk-slider-items uk-grid-small uk-child-width-1-1 uk-child-width-1-1@m uk-grid">
+          <div>
+            <video
+              src="media/icra2026_vid_artiest.mp4"
+              controls
+              muted
+            />
+          </div>
+        </div>
+      </div>
+
+      ### **Estimation Error Transition**
+
+      Estimation error transition of exteroception-based, proprioception-augmented, and mixed estimations during the manipulation. 
+      The progress of the opening motion is indicated by the object’s open angle normalized using the joint limits. 
+      (a) The appearance of the object can be inferred to be opened in either a rightward or upward direction, while the correct direction is upward, leading to visual ambiguity in exteroception-based estimation. 
+      (b) In contrast, no visual ambiguity exists in this case.
+
+      <div uk>
+        <div class="uk-slider-items uk-grid-small uk-child-width-1-1 uk-child-width-1-1@m uk-grid">
+          <div>
+            <img src="media/ICRA2026_0911v2_art_demo-1.png">
+          </div>
+        </div>
+      </div>
+
+  - title: Auto-Retrying Behavior
+    text: |
+      Additionally, the robot developed an auto-retrying behavior. When the initial grasp was unstable due to a misaligned gripper, the robot autonomously regrasped the handle and successfully opened the drawer. Such auto-retrying behaviors are crucial for adapting to unexpected changes in the environment and ensuring successful task completion.
+        <div uk>
+        <div class="uk-slider-items uk-grid-small uk-child-width-1-1 uk-child-width-1-1@m uk-grid">
+          <div>
+            <video
+              src="media/icra2026_vid_auto.mp4"
+              controls
+              muted
+            />
+          </div>
+        </div>
+      </div>
+
+  - title: License
+    text: |
+      This template is provided under the [Attribution-ShareAlike 4.0 International (CC BY-SA 4.0)](https://creativecommons.org/licenses/by-sa/4.0/) license.
+      You are free to use and modify the code in your project as long as you include a link to this [GitHub repository](https://github.com/denkiwakame/academic-project-template) in your footer.
+
+projects: # relevant projects
+  - title: Relevant Project I
+    description: abstract text
+    img: https://getuikit.com/docs/images/light.jpg
+    journal: "ABCD'23"
+    url: https://denkiwakame.github.io/academic-project-template/
+  - title: Relevant Project II
+    description: abstract text
+    img: 001.jpg
+    journal: "EFGH'22"
+    url: https://denkiwakame.github.io/academic-project-template/
+  - title: Relevant Project III
+    description: abstract text
+    img: 002.jpg
+    journal: "IJKL'22"
+    url: https://denkiwakame.github.io/academic-project-template/
