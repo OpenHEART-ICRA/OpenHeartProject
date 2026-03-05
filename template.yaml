@@ -11,7 +11,7 @@ resources:
   # huggingface: https://huggingface.co/
 description: a framework for opening heterogeneous articulated objects with a legged manipulator.
 
-image: https://achrxme-1838.github.io/OpenHeartProject/teaser.jpg
+image: media/artiest_framework.jpg
 url: https://achrxme-1838.github.io/OpenHeartProject/
 speakerdeck: # speakerdeck slide ID
 authors:
